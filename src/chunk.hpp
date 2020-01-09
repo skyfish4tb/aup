@@ -5,8 +5,6 @@
 
 namespace aup
 {
-    using namespace std;
-
     enum Opcode : uint8_t
     {
         OP_RET,
@@ -14,9 +12,9 @@ namespace aup
 
     struct Chunk
     {
-        vector<uint8_t> code;
-        vector<uint16_t> lines;
-        vector<uint16_t> columns;
+        std::vector<uint8_t> code;
+        std::vector<uint16_t> lines;
+        std::vector<uint16_t> columns;
         ValueArray constants;
 
         void emit(uint8_t byte, int line, int column);

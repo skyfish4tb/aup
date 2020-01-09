@@ -1,17 +1,21 @@
 #pragma once
 
 #include <cstddef>
+#include "object.hpp"
 
 namespace aup
 {
     struct GC
     {
-        size_t allocated;
-        size_t nextGC;
-
+    public:
         GC();
         ~GC();
-        void *realloc(void *ptr, size_t oldSize, size_t newSize);
+        Obj *alloc(ObjType type);
         void collect();
+        void free(Obj *object);
+    private:
+        size_t allocated;
+        size_t nextGC;
+        Obj *objects;
     };
 }

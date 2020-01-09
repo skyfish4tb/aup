@@ -7,6 +7,7 @@ GC::GC()
 {
     allocated = 0;
     nextGC = 0;
+    objects = nullptr;
 }
 
 GC::~GC()
@@ -14,23 +15,47 @@ GC::~GC()
 
 }
 
-void *GC::realloc(void *ptr, size_t oldSize, size_t newSize)
+Obj *GC::alloc(ObjType type)
 {
-    allocated += newSize - oldSize;
+    size_t size = 0;
 
-    if (newSize > oldSize && allocated > nextGC) {
-        collect();
+    switch (type) {
+        case TSTR:  size = sizeof(Str); break;
+        case TFUN:  size = sizeof(Fun); break;
+        case TMAP:  size = sizeof(Map); break;
     }
 
-    if (newSize == 0) {
-        free(ptr);
-        return NULL;
-    }
+    allocated += size;
+    if (allocated > nextGC) collect();
 
-    return std::realloc(ptr, newSize);
+    Obj *object = reinterpret_cast<Obj *>(new char[size]);
+    object->type = type;
+    object->next = objects;
+    return objects = object;
+}
+
+void GC::free(Obj *object)
+{
+    switch (object->type) {
+        case TSTR: {
+            delete reinterpret_cast<Str *>(object);
+            allocated -= sizeof(Str);
+            break;
+        }
+        case TFUN: {
+            delete reinterpret_cast<Fun *>(object);
+            allocated -= sizeof(Fun);
+            break;
+        }
+        case TMAP: {
+            delete reinterpret_cast<Map *>(object);
+            allocated -= sizeof(Map);
+            break;
+        }
+    }
 }
 
 void GC::collect()
 {
-
+    
 }

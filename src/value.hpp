@@ -14,9 +14,10 @@ namespace aup
         TOBJ
     };
 
-    struct Object;
-    struct String;
-    struct Function;
+    struct Obj;
+    struct Str;
+    struct Fun;
+    struct Map;
 
     struct Value
     {
@@ -25,7 +26,7 @@ namespace aup
             bool Bool;
             double Num;
             void *Ptr;
-            Object *Obj;
+            Obj *Obj;
             uint64_t raw;
         };
 
@@ -43,7 +44,7 @@ namespace aup
         inline Value() : type(TNIL), raw(0) {};
         inline Value(bool b) : type(TBOOL), Bool(b) {};
         inline Value(double n) : type(TNUM), Num(n) {};
-        inline Value(Object *o) : type(TOBJ), Obj(o) {};
+        inline Value(struct Obj *o) : type(TOBJ), Obj(o) {};
     };
 
     struct ValueArray

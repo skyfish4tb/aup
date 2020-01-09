@@ -1,10 +1,12 @@
 #include "table.hpp"
+#include "object.hpp"
 
 using namespace aup;
+using namespace std;
 
 #define TABLE_MAX_LOAD  0.75
 
-static Entry *findEntry(vector<Entry>& entries, int capacity, String *key)
+static Entry *findEntry(vector<Entry>& entries, int capacity, Str *key)
 {
     uint32_t index = key->hash % capacity;
     Entry *tombstone = NULL;
@@ -31,7 +33,7 @@ static Entry *findEntry(vector<Entry>& entries, int capacity, String *key)
     }
 }
 
-bool Table::get(String *key, Value& value)
+bool Table::get(Str *key, Value& value)
 {
     if (count == 0) return false;
 
@@ -64,7 +66,7 @@ void Table::growCapacity()
     capacity = newCapacity;
 }
 
-bool Table::set(String *key, const Value& value)
+bool Table::set(Str *key, const Value& value)
 {
     if (count + 1 > capacity * TABLE_MAX_LOAD) { 
         growCapacity();
@@ -82,7 +84,7 @@ bool Table::set(String *key, const Value& value)
     return isNewKey;
 }
 
-bool Table::remove(String *key)
+bool Table::remove(Str *key)
 {
     if (count == 0) return false;
 
@@ -107,7 +109,7 @@ void Table::addAll(Table& from)
     }
 }
 
-String *Table::findString(const char *chars, int length, uint32_t hash)
+Str *Table::findString(const char *chars, int length, uint32_t hash)
 {
     if (count == 0) return NULL;
 
@@ -115,7 +117,7 @@ String *Table::findString(const char *chars, int length, uint32_t hash)
 
     for (;;) {
         Entry *entry = &entries[index];
-        String *key = entry->key;
+        Str *key = entry->key;
 
         if (key == NULL) {
             // Stop if we find an empty non-tombstone entry.                 

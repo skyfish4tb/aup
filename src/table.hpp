@@ -4,13 +4,12 @@
 
 #include "aup.h"
 #include "value.hpp"
-#include "object.hpp"
 
 namespace aup
 {
     struct Entry
     {
-        String *key;
+        Str *key;
         Value value;
 
         Entry() : key(nullptr), value(Value()) {}
@@ -19,16 +18,16 @@ namespace aup
     struct Table
     {
     public:
-        bool get(String *key, Value& value);
-        bool set(String *key, const Value& value);
-        bool remove(String *key);
+        bool get(Str *key, Value& value);
+        bool set(Str *key, const Value& value);
+        bool remove(Str *key);
         void addAll(Table& from);
-        String *findString(const char *chars, int length, uint32_t hash);
+        Str *findString(const char *chars, int length, uint32_t hash);
 
     private:
         size_t count;
         size_t capacity;
-        vector<Entry> entries;
+        std::vector<Entry> entries;
 
         void growCapacity();
     };

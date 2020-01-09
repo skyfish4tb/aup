@@ -3,6 +3,7 @@
 #include "aup.h"
 #include "value.hpp"
 #include "object.hpp"
+#include "table.hpp"
 #include "gc.hpp"
 
 #include <cstdint>
@@ -12,9 +13,14 @@
 
 namespace aup
 {
+    enum Status : int {
+        OK,
+
+    };
+
     struct Frame {
         uint8_t *ip;
-        Function *function;
+        Fun *function;
         Value *slots;
     };
 
@@ -23,14 +29,28 @@ namespace aup
     public:
         VM();
         ~VM();
-        void push(Value value);
+
+        Status doFile(const char *fname);
+        Status execute();
+
+        void push(const Value& value);
         Value pop();
+       
+        Map *newMap();
+        Fun *newFunction();
+        Str *takeString(char *chars, int length);
+        Str *copyString(const char *chars, int length);
 
     private:
         Value *top;
         Value stack[AUP_MAX_STACK];
         Frame frames[AUP_MAX_FRAMES];
         int frameCount;
+
         GC *gc;
+        Table *strings;
+        Table *globals;
+
+        void resetStack();
     };
 }

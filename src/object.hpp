@@ -3,39 +3,56 @@
 #include "aup.h"
 #include "value.hpp"
 #include "chunk.hpp"
+#include "table.hpp"
+#include "hash.hpp"
 
 namespace aup
 {
-    enum ObjectType
+    enum ObjType
     {
         TSTR,
         TFUN,
         TMAP
     };
 
-    struct Object
+    struct Obj
     {
-        ObjectType type;
-        struct Obj *next;
+        ObjType type;
+        Obj *next;
 
         void print();
-
-        inline bool isType(ObjectType type) { return this->type == type; };
+        inline bool isType(ObjType type) { return this->type == type; };
         inline bool isStr() { return type == TSTR; };
         inline bool isFun() { return type == TFUN; };
+        inline bool isMap() { return type == TMAP; };
     };
 
-    struct String : public Object
+    struct Str : public Obj
     {
+        Str(Table *strings, char *chars, int length, uint32_t hash);
+        ~Str();
+
         char *chars;
         int length;
         uint32_t hash;
     };
 
-    struct Function : public Object
+    struct Fun : public Obj
     {
+        Fun();
+        ~Fun();
+
         int arity;
         Chunk chunk;
-        String *name;
+        Str *name;
+    };
+
+    struct Map : public Obj
+    {
+        Map();
+        ~Map();
+
+        Hash hash;
+        Table table;
     };
 }
