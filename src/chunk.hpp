@@ -45,13 +45,26 @@ namespace aup
 #undef _CODE
     };
 
+    struct Source
+    {
+        char *buffer;
+        char *fname;
+        size_t size;
+
+        Source(const char *file);
+        ~Source();
+        bool validate();
+    };
+
     struct Chunk
     {
         std::vector<uint8_t> code;
         std::vector<uint16_t> lines;
         std::vector<uint16_t> columns;
         ValueArray constants;
+        Source *source;
 
+        Chunk(Source *source) : source(source) {};
         void emit(uint8_t byte, int line, int column);
     };
 }

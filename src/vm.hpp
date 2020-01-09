@@ -37,9 +37,11 @@ namespace aup
         Value pop();
        
         Map *newMap();
-        Fun *newFunction();
+        Fun *newFunction(Source *source);
         Str *takeString(char *chars, int length);
         Str *copyString(const char *chars, int length);
+
+        Fun *compile(Source *source);
 
     private:
         Value *top;

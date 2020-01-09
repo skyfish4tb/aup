@@ -30,7 +30,7 @@ Map::~Map()
 {
 }
 
-Fun::Fun()
+Fun::Fun(Source *source) : chunk(source)
 {
     arity = 0;
     name = nullptr;
@@ -68,10 +68,10 @@ Map *VM::newMap()
     return map;
 }
 
-Fun *VM::newFunction()
+Fun *VM::newFunction(Source *source)
 {
     Fun *function = reinterpret_cast<Fun *>(gc->alloc(TFUN));
-    new (function) Fun();
+    new (function) Fun(source);
 
     return function;
 }

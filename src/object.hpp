@@ -39,7 +39,7 @@ namespace aup
 
     struct Fun : public Obj
     {
-        Fun();
+        Fun(Source *source);
         ~Fun();
 
         int arity;

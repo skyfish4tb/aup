@@ -1,3 +1,5 @@
+#include <cstdio>
+
 #include "aup.h"
 
 using namespace aup;
