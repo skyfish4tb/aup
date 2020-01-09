@@ -17,5 +17,8 @@ void Object::print()
 
             break;
         }
+        default:
+            printf("obj: %p", reinterpret_cast<void *>(this));
+            break;
     }
 }

@@ -8,6 +8,7 @@ using namespace aup;
 void Value::print()
 {
     switch (type) {
+        default:
         case TNIL:
             printf("nil");
             break;
@@ -20,6 +21,9 @@ void Value::print()
         case TPTR:
             printf("ptr: %p", Ptr);
             break;
+        case TOBJ:
+            Obj->print();
+            break;
     }
 }
 
@@ -28,6 +32,7 @@ bool Value::equal(const Value& that)
     if (type != that.type) return false;
 
     switch (type) {
+        default:
         case TNIL:
             return true;
         case TBOOL:
@@ -37,8 +42,6 @@ bool Value::equal(const Value& that)
         case TPTR:
             return Ptr == that.Ptr;
     }
-
-    return false;
 }
 
 int ValueArray::push(Value value, bool allowDup)
