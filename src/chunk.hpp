@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include "value.hpp"
 
 namespace aup
 {
@@ -13,10 +14,10 @@ namespace aup
 
     struct Chunk
     {
-    public:
         vector<uint8_t> code;
         vector<uint16_t> lines;
         vector<uint16_t> columns;
+        ValueArray constants;
 
         void emit(uint8_t byte, int line, int column);
     };

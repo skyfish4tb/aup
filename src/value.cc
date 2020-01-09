@@ -42,7 +42,7 @@ bool Value::equal(const Value& that)
 int ValueArray::push(Value value, bool allowDup)
 {
     if (!allowDup) {
-        for (int i = 0; i < values.size(); i++) {
+        for (int i = 0; i < (int)values.size(); i++) {
             if (value.equal(values[i])) {
                 return i;
             }
