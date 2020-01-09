@@ -32,6 +32,8 @@ namespace aup
         inline bool isBool(bool b) { return (type == TBOOL) && (Bool == b); }
         inline bool isNum() { return type == TNUM; }
         inline bool isPtr() { return type == TPTR; }
+
+        inline bool operator == (const Value& that) { return equal(that); }
     };
 
     struct ValueArray
