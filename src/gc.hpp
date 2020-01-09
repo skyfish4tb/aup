@@ -12,5 +12,6 @@ namespace aup
         GC();
         ~GC();
         void *realloc(void *ptr, size_t oldSize, size_t newSize);
+        void collect();
     };
 }
