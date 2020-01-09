@@ -39,6 +39,11 @@ namespace aup
         inline bool isPtr() { return type == TPTR; }
 
         inline bool operator == (const Value& that) { return equal(that); }
+
+        inline Value() : type(TNIL), raw(0) {};
+        inline Value(bool b) : type(TBOOL), Bool(b) {};
+        inline Value(double n) : type(TNUM), Num(n) {};
+        inline Value(Object *o) : type(TOBJ), Obj(o) {};
     };
 
     struct ValueArray
