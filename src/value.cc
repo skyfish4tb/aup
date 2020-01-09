@@ -1,5 +1,7 @@
 #include <cstdio>
+
 #include "value.hpp"
+#include "object.hpp"
 
 using namespace aup;
 

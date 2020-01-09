@@ -14,6 +14,10 @@ namespace aup
         TOBJ
     };
 
+    struct Object;
+    struct String;
+    struct Function;
+
     struct Value
     {
         ValueType type;
@@ -21,6 +25,7 @@ namespace aup
             bool Bool;
             double Num;
             void *Ptr;
+            Object *Obj;
             uint64_t raw;
         };
 

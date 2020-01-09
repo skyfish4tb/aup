@@ -1,6 +1,8 @@
 #pragma once
 
+#include "aup.h"
 #include "value.hpp"
+#include "object.hpp"
 #include "gc.hpp"
 
 #include <cstdint>
@@ -12,7 +14,7 @@ namespace aup
 {
     struct Frame {
         uint8_t *ip;
-        Fun *function;
+        Function *function;
         Value *slots;
     };
 
